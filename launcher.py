@@ -508,7 +508,10 @@ def download_main_exe(progress_window=None):
     
     download_file(main_exe['browser_download_url'], temp_file, progress_window, 50, 100, "Downloading main executable...")
 
-    current_dir = os.path.dirname(os.path.abspath(__file__))
+    if getattr(sys, 'frozen', False):
+        current_dir = os.path.dirname(sys.executable)
+    else:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
     try:
         # Replace file using python instead of batch script
         if os.path.exists("AutoMonsterX.exe"):
