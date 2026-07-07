@@ -1,51 +1,43 @@
 import os
 import sys
-import importlib
 import subprocess
 from tkinter import messagebox
 
+def run_setup_if_needed():
+    # 1. Find the hidden folder where PyInstaller put the .bat file
+    if hasattr(sys, '_MEIPASS'):
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.abspath(".")
 
-def check_dependencies():
-    packages = {
-        "pkg_resources": "setuptools",
-        "scrcpy": "scrcpy-client",
-        "adbutils": "adbutils",
-        "wakepy": "wakepy",
-        "customtkinter": "customtkinter"
-    }
+    bat_file_path = os.path.join(base_path, "install_dependencies.bat")
 
-    missing = []
-
-    for module, package in packages.items():
+    # 2. Run the bat file if it exists
+    if os.path.exists(bat_file_path):
         try:
-            importlib.import_module(module)
-        except ImportError:
-            missing.append(package)
-
-    if missing:
-        try:
-            subprocess.check_call([
-                sys.executable,
-                "-m",
-                "pip",
-                "install",
-                *missing
-            ])
-
-        except Exception as e:
-            messagebox.showerror(
-                "Dependency Error",
-                f"Could not install missing packages:\n\n{e}"
-            )
+            # Open a temporary console ONLY for the installation process 
+            # so the user can see the download progress.
+            if os.name == 'nt':  # If running on Windows
+                subprocess.run(
+                    [bat_file_path], 
+                    creationflags=subprocess.CREATE_NEW_CONSOLE, 
+                    check=True
+                )
+            else:
+                subprocess.run([bat_file_path], shell=True, check=True)
+                
+        except subprocess.CalledProcessError as e:
+            messagebox.showerror("Setup Error", f"Installation failed or was cancelled.\nError: {e}")
             sys.exit(1)
 
+run_setup_if_needed()
 
-# Run before importing your own files
-check_dependencies()
-
-
-from controller_gui import ControllerGUI
-from wakepy import keep
+try:
+    from controller_gui import ControllerGUI
+    from wakepy import keep
+except ImportError as e:
+    messagebox.showerror("Import Error", f"A dependency is still missing. Setup may have failed.\n\n{e}")
+    sys.exit(1)
 
 
 def main():

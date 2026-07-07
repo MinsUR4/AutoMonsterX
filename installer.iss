@@ -1,7 +1,7 @@
-#define MyAppName "AutoMonster"
-#define MyAppPublisher "some-guy250"
-#define MyAppURL "https://github.com/MinsUR4/AutoMonster"
-#define MyAppExeName "LauncherAutoMonster.exe"
+#define MyAppName "AutoMonsterX"
+#define MyAppPublisher "Mind Of Who"
+#define MyAppURL "https://github.com/MinsUR4/AutoMonsterX"
+#define MyAppExeName "LauncherAutoMonsterX.exe"
 
 ; Static version for the bootstrap installer
 #define MyAppVersion "1.0.0"
@@ -19,7 +19,7 @@ DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile=LICENSE
 OutputDir=installer
-OutputBaseFilename=AutoMonster_Setup
+OutputBaseFilename=AutoMonsterX_Setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -33,7 +33,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "final_dist\LauncherAutoMonster.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "final_dist\LauncherAutoMonsterX.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "launcher_version.txt"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]

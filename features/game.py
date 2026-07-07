@@ -1,7 +1,7 @@
 import time
 import logging
 from Constants import ASSETS
-import AutoMonsterErrors
+import AutoMonsterXErrors
 from utils.logger import setup_logger
 
 logger = setup_logger()
@@ -21,7 +21,7 @@ class GameManager:
             self.controller.click(ASSETS.Yes)
             self.controller.pause(2)
             if self.controller.in_game():
-                raise AutoMonsterErrors.CloseGameError("Failed to close game")
+                raise AutoMonsterXErrors.CloseGameError("Failed to close game")
         logger.info("Game closed")
 
     def launch_game(self):
@@ -40,7 +40,7 @@ class GameManager:
             if self.controller.in_game():
                 break
             if time.perf_counter() - now > 70:
-                raise AutoMonsterErrors.OpenGameError("Failed to open game")
+                raise AutoMonsterXErrors.OpenGameError("Failed to open game")
             self.controller.pause(1)
         if force_close:
             self.controller.pause(13)
@@ -63,7 +63,7 @@ class GameManager:
             self.controller.click_back()
             count += 1
             if count > 10:
-                raise AutoMonsterErrors.GoToError("Failed to go to islands")
+                raise AutoMonsterXErrors.GoToError("Failed to go to islands")
         self.controller.pause(1)
         if self.controller.in_screen(ASSETS.QuitGame):
             self.controller.click_back()
@@ -74,7 +74,7 @@ class GameManager:
                                     timeout=15,
                                     raise_error=True):
             self.controller.pause(1)
-            raise AutoMonsterErrors.GoToError("Failed to enter Activity Hub")
+            raise AutoMonsterXErrors.GoToError("Failed to enter Activity Hub")
 
     def scroll_hub(self, asset: str):
         count = 0
@@ -83,4 +83,4 @@ class GameManager:
             self.controller.pause(1)
             count += 1
             if count > 10:
-                raise AutoMonsterErrors.GoToError(f"Failed to find {asset} in Activity Hub")
+                raise AutoMonsterXErrors.GoToError(f"Failed to find {asset} in Activity Hub")
