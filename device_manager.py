@@ -54,7 +54,7 @@ class DeviceManager:
 
             self.client = scrcpy.Client(max_fps=10, stay_awake=True, block_frame=True,
                                         device=target_device)
-            self.client.start(True, True)
+            self.client.start()
             logger.info(f'Device connected: {target_device.serial}')
             
             self.check_resolution()
