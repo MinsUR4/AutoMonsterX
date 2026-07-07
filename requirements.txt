@@ -1,19 +1,28 @@
-# NOTE: av and scrcpy-client have a version conflict:
-# - scrcpy-client requires av<10.0.0,>=9.0.0
-# - av 9.x fails to build on Python 3.10+ due to Cython errors
-# - av 16.0.1 has pre-built wheels and is API-compatible with scrcpy-client
+# NOTE: av, scrcpy-client, and adbutils have interlocking version constraints
+# on Python 3.12+. This file is pinned to versions verified to work together:
 #
-# Installation order:
-# 1. Install av==16.0.1 first (pre-built binary)
-# 2. Install scrcpy-client with --no-deps
-# 3. Install remaining dependencies
-# See install_dependencies.bat for automated installation
+# - scrcpy-client 0.4.1 requires av<10.0.0,>=9.2.0, but av 9.x fails to build
+#   on Python 3.10+ (Cython errors). av 16.0.1 has pre-built wheels and is
+#   API-compatible with scrcpy-client, so we use that instead.
+# - scrcpy-client 0.4.1 internally imports `_AdbStreamConnection` from
+#   adbutils, a private symbol removed in modern adbutils (1.x/2.x). It only
+#   exists in adbutils 0.14.x, so adbutils is pinned to that range here. The
+#   rest of this app (device_manager.py) only uses long-stable adbutils API
+#   (adb.device_list(), device.serial, device.shell()), which is present in
+#   0.14.x, so this downgrade doesn't break anything else.
+# - setuptools>=81 removed pkg_resources from its default install, which
+#   scrcpy-client/adbutils still import at runtime. Pinned below 81 to keep
+#   it available. (Upstream pkg_resources removal is planned for late 2025.)
+#
+# Installation order matters - see install_dependencies.bat for the
+# automated, verified-working sequence.
 
+setuptools<81
 opencv-python>=4.9.0.80
 requests>=2.28.2
 pillow>=10.4.0
 av==16.0.1
 customtkinter>=5.2.2
 wakepy>=0.10.2
-adbutils<2.0.0,>=1.0.8
+adbutils>=0.14.1,<0.15.0
 loguru

@@ -1,2 +1,8 @@
-# scrcpy-client installed separately to avoid av version conflict
-scrcpy-client>=0.4.7
+# scrcpy-client installed separately (with --no-deps) to avoid it dragging in
+# its old, incompatible av/adbutils/opencv-python constraints.
+#
+# Pinned to 0.4.1 specifically: 0.4.2-0.4.7 declare Requires-Python <3.11,
+# so pip cannot resolve them at all on Python 3.11+. 0.4.1 has no such
+# restriction and installs cleanly on 3.12. It requires adbutils<0.15.0,
+# which requirements.txt is pinned to accommodate - see the note there.
+scrcpy-client==0.4.1
