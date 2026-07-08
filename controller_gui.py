@@ -13,8 +13,8 @@ import cv2
 import scrcpy
 from PIL import Image
 
-import AutoMonsterErrors
-from AutoMonster import Controller
+import AutoMonsterXErrors
+from AutoMonsterX import Controller
 from Constants import GUI_COMMANDS, GUI_COMMAND_DESCRIPTIONS
 from command_frame import CommandFrame
 from device_selection_frame import DeviceSelectionFrame
@@ -35,7 +35,7 @@ class ControllerGUI(ctk.CTk):
         if os.path.exists("assets/favicon.ico"):
             self.iconbitmap("assets/favicon.ico")
 
-        self.title("AutoMonster")
+        self.title("AutoMonsterX")
         self.minsize(400, 450)  # Smaller initial size for device selection
         # stop resizing
         self.resizable(False, False)
@@ -499,7 +499,7 @@ class ControllerGUI(ctk.CTk):
         if len(sys.argv) > 1:
             self.append_log(f"Updated to the latest version: v-{__version__}")
         else:
-            self.append_log(f"AutoMonster v-{__version__} started")
+            self.append_log(f"AutoMonsterX v-{__version__} started")
 
         if os.path.exists("debug.ban"):
             self.toggle_debug_mode()
@@ -563,11 +563,11 @@ class ControllerGUI(ctk.CTk):
                 return
 
             self.append_log(f"Completed {command_name}", "success")
-        except AutoMonsterErrors.AutoMonsterError as e:
+        except AutoMonsterXErrors.AutoMonsterXError as e:
             error_msg = f"Error running {command_name}: {e}"
             self.append_log(error_msg, "error")
             logging.error(error_msg)
-        except AutoMonsterErrors.ExecutionFlag:
+        except AutoMonsterXErrors.ExecutionFlag:
             self.append_log(f"Execution of {command_name} stopped", "warning")
         finally:
             # Reset UI state
@@ -979,7 +979,7 @@ class ControllerGUI(ctk.CTk):
                         progress = (i + 1) / total_steps
                         self.after(0, lambda p=progress: [self.macro_progress.set(p), self.macro_progress.update()])
                         
-                    except AutoMonsterErrors.ExecutionFlag:
+                    except AutoMonsterXErrors.ExecutionFlag:
                         self.append_log(f"Macro step {command} stopped", "warning")
                         break
                     except Exception as e:

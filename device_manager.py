@@ -6,7 +6,7 @@ import cv2
 import scrcpy
 from adbutils import adb
 
-import AutoMonsterErrors
+import AutoMonsterXErrors
 from utils.logger import setup_logger
 
 logger = setup_logger()
@@ -30,7 +30,7 @@ class DeviceManager:
             if self.cancel_flag:
                 self.cancel_flag = False
                 logger.info("Cancelled current operation in pause")
-                raise AutoMonsterErrors.ExecutionFlag
+                raise AutoMonsterXErrors.ExecutionFlag
             time.sleep(min(0.1, seconds - (time.time() - start)))
 
     def connect(self, serial: Optional[str] = None):
@@ -137,14 +137,14 @@ class DeviceManager:
         if self.cancel_flag:
             self.cancel_flag = False
             logger.info("Cancelled current operation in take_screenshot")
-            raise AutoMonsterErrors.ExecutionFlag
+            raise AutoMonsterXErrors.ExecutionFlag
 
         while self._paused:
             self.pause(5)
             if self.cancel_flag:
                 self.cancel_flag = False
                 logger.info("Cancelled current operation")
-                raise AutoMonsterErrors.ExecutionFlag
+                raise AutoMonsterXErrors.ExecutionFlag
 
         self.__last_screenshot = self.client.last_frame
         if self.resized:

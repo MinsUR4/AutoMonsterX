@@ -2,68 +2,68 @@ class ExecutionFlag(Exception):
     pass
 
 
-class AutoMonsterXError(Exception):
+class AutoMonsterXXError(Exception):
     pass
 
 
-class DeviceError(AutoMonsterXError):
+class DeviceError(AutoMonsterXXError):
     pass
 
 
-class OpenGameError(AutoMonsterXError):
+class OpenGameError(AutoMonsterXXError):
     pass
 
 
-class CloseGameError(AutoMonsterXError):
+class CloseGameError(AutoMonsterXXError):
     pass
 
 
-class ScreenShotError(AutoMonsterXError):
+class ScreenShotError(AutoMonsterXXError):
     pass
 
 
-class WaitError(AutoMonsterXError):
+class WaitError(AutoMonsterXXError):
     pass
 
 
-class FollowSequenceError(AutoMonsterXError):
+class FollowSequenceError(AutoMonsterXXError):
     pass
 
 
-class ClickError(AutoMonsterXError):
+class ClickError(AutoMonsterXXError):
     pass
 
 
-class GoToError(AutoMonsterXError):
+class GoToError(AutoMonsterXXError):
     pass
 
 
-class BattleError(AutoMonsterXError):
+class BattleError(AutoMonsterXXError):
     pass
 
 
-class InvalidTeamError(AutoMonsterXError):
+class InvalidTeamError(AutoMonsterXXError):
     pass
 
 
-class PVPError(AutoMonsterXError):
+class PVPError(AutoMonsterXXError):
     pass
 
 
-class InputError(AutoMonsterXError):
+class InputError(AutoMonsterXXError):
     pass
 
 
-class PlayAdsError(AutoMonsterXError):
+class PlayAdsError(AutoMonsterXXError):
     pass
 
 
-class SkipAdError(AutoMonsterXError):
+class SkipAdError(AutoMonsterXXError):
     pass
 
 
-class ConnectError(AutoMonsterXError):
+class ConnectError(AutoMonsterXXError):
     pass
 
-class SliderError(AutoMonsterXError):
+class SliderError(AutoMonsterXXError):
     pass

@@ -3,8 +3,8 @@ import time
 import cv2
 from PIL import Image
 
-repo_url_api = "https://api.github.com/repos/MinsUR4/AutoMonsterX"
-repo_url = "https://github.com/MinsUR4/AutoMonsterX"
+repo_url_api = "https://api.github.com/repos/MinsUR4/AutoMonsterXX"
+repo_url = "https://github.com/MinsUR4/AutoMonsterXX"
 
 def time_function(func, *args, **kwargs) -> any:
     start = time.perf_counter()
