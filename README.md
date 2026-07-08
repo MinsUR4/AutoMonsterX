@@ -1,6 +1,6 @@
 # 🎮 Auto Monster Project
 
-[![Latest release](https://img.shields.io/github/v/release/some-guy250/AutoMonsterXX?style=for-the-badge)](../../releases/latest)
+[![Latest release](https://img.shields.io/github/v/release/some-guy250/AutoMonsterX?style=for-the-badge)](../../releases/latest)
 
 A Python-based automation tool for Monster Legends, designed to handle repetitive tasks efficiently.
 
@@ -58,7 +58,7 @@ Current implementation status of major features:
 ## 💻 Installation
 Configure your emulator (see below)
 ### Quick Install (Recommended)
-1. Download the [latest AutoMonsterXX_Setup.exe](../../releases/latest)
+1. Download the [latest AutoMonsterX_Setup.exe](../../releases/latest)
 2. Run the installer and follow the prompts 
 3. Launch from Start Menu or desktop shortcut
 
@@ -133,7 +133,7 @@ Updates are installed seamlessly without manual intervention.
    - Note the IP address and port (e.g., 192.168.1.100:5555)
 
 3. Connect Device:
-   - Launch AutoMonsterXX
+   - Launch AutoMonsterX
    - Enter the IP address and port in wireless connection field
    - Click "Connect Wireless"
    - Accept the debugging prompt on device
@@ -144,7 +144,7 @@ Updates are installed seamlessly without manual intervention.
    - Ensure stable network connection for reliability
 
 ### Device Selection Interface
-When you first launch AutoMonsterXX, you'll see the device selection screen:
+When you first launch AutoMonsterX, you'll see the device selection screen:
 - Lists all available devices (emulators and phones)
 - Shows connection status and resolution
 - Allows testing connection before proceeding
@@ -153,7 +153,7 @@ When you first launch AutoMonsterXX, you'll see the device selection screen:
 ## 💬 Usage and Interface
 
 ### Device Connection
-1. Launch AutoMonsterXX
+1. Launch AutoMonsterX
 2. Connect your device via USB or wireless
 
 ### Main Interface Layout

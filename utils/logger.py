@@ -24,7 +24,7 @@ class CustomFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-def setup_logger(name="AutoMonsterXX", level=logging.DEBUG):
+def setup_logger(name="AutoMonsterX", level=logging.DEBUG):
     logger = logging.getLogger(name)
     logger.setLevel(level)
 

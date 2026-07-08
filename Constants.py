@@ -533,7 +533,7 @@ GUI_COMMAND_DESCRIPTIONS = {
         "description": "Closes the game gracefully.\n\n"
                        "Features:\n"
                        "• Close Game Only - Just closes the game\n"
-                       "• Close Game & Exit Program - Closes game and exits AutoMonsterXX\n"
+                       "• Close Game & Exit Program - Closes game and exits AutoMonsterX\n"
                        "• Close Game & Shutdown Computer - Closes game, exits, and shuts down PC",
         "parameters": {
             "action": "Select what to do after closing the game"
