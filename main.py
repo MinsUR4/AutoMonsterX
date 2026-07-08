@@ -2,14 +2,9 @@ import os
 import sys
 from tkinter import messagebox
 
-# No more setup checks! The .exe will already have these inside it.
-try:
-    from controller_gui import ControllerGUI
-    from wakepy import keep
-except ImportError as e:
-    messagebox.showerror("Import Error", f"A dependency failed to bundle during compilation.\n\n{e}")
-    sys.exit(1)
+from controller_gui import ControllerGUI
 
+from wakepy import keep
 
 def main():
     try:
@@ -19,18 +14,12 @@ def main():
         with keep.presenting():
             app = ControllerGUI()
             app.mainloop()
-
-    except KeyboardInterrupt:
-        return
-
     except Exception as e:
+        if e is KeyboardInterrupt:
+            return
         if os.path.exists("debug.ban"):
             raise e
-
-        messagebox.showerror(
-            "Error",
-            str(e)
-        )
+        messagebox.showerror("Error", str(e))
 
 
 if __name__ == '__main__':
