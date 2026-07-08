@@ -1,7 +1,7 @@
 import logging
 from typing import Optional
 from Constants import ASSETS, BATTLE_TIMEOUT_SECONDS, SPIN_WHEEL_THRESHOLD, TEAM_SELECTION_THRESHOLD
-import AutoMonsterXErrors
+import AutoMonsterErrors
 from utils.logger import setup_logger
 
 logger = setup_logger()
@@ -13,7 +13,7 @@ class BattleManager:
     def auto_battle(self):
         if not self.controller.follow_sequence((ASSETS.StartBattle, ASSETS.StartBattleRankUp, ASSETS.StartBattlePVP),
                                     ASSETS.AutoBattle, None):
-            raise AutoMonsterXErrors.BattleError("Failed to start battle")
+            raise AutoMonsterErrors.BattleError("Failed to start battle")
         self.controller.pause(5)
         counter = 5
         while True:
@@ -28,7 +28,7 @@ class BattleManager:
                 break
             counter += 1
             if counter > BATTLE_TIMEOUT_SECONDS:
-                raise AutoMonsterXErrors.BattleError(f"Battle is not finished after {BATTLE_TIMEOUT_SECONDS // 60} minutes")
+                raise AutoMonsterErrors.BattleError(f"Battle is not finished after {BATTLE_TIMEOUT_SECONDS // 60} minutes")
             self.controller.pause(1)
 
     def spin_wheel(self, screenshot=None):
@@ -152,7 +152,7 @@ class BattleManager:
                         if self.controller.in_screen(ASSETS.EraSagaDone, ASSETS.EnterEraSaga, retries=3):
                             return True
                         if not self.controller.in_screen(ASSETS.StartBattle, ASSETS.StartBattleRankUp, ASSETS.PlayCutscene, retries=3):
-                            raise AutoMonsterXErrors.BattleError("Failed to skip cutscene")
+                            raise AutoMonsterErrors.BattleError("Failed to skip cutscene")
                     self.controller.pause(3)
                     if self.controller.in_screen(ASSETS.StartBattle, ASSETS.StartBattleRankUp):
                         skip_part = True

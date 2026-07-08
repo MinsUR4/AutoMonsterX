@@ -3,7 +3,7 @@ import time
 import pathlib
 import scrcpy
 from Constants import ASSETS, AdLocationsHorizontal, AdLocationsVertical, ADS_DIR, TEAM_SELECTION_THRESHOLD
-import AutoMonsterXErrors
+import AutoMonsterErrors
 from utils.logger import setup_logger
 
 logger = setup_logger()
@@ -51,7 +51,7 @@ class AdManager:
 
         while not self.controller.in_game():
             if counter > max_it:
-                raise AutoMonsterXErrors.SkipAdError("Failed to skip ad")
+                raise AutoMonsterErrors.SkipAdError("Failed to skip ad")
 
             if self.controller.in_screen(ASSETS.Wheel, skip_ad_check=True, retries=5):
                 counter = 0
@@ -99,7 +99,7 @@ class AdManager:
         sc = self.controller.take_screenshot()
         self.controller.pause(t)
         # Assuming compare_imgs is available or imported. 
-        # It was imported from HelperFunctions in AutoMonsterX.py
+        # It was imported from HelperFunctions in AutoMonster.py
         from HelperFunctions import compare_imgs
         return compare_imgs(sc, self.controller.take_screenshot(), transform_to_black=True)
 

@@ -19,7 +19,7 @@ repo_url = "https://github.com/MinsUR4/AutoMonsterX"
 class ModernProgressWindow:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("AutoMonsterX Updater")
+        self.root.title("AutoMonster Updater")
         self.root.geometry("400x250")
         self.root.resizable(False, False)
         self.root.configure(bg='#2b2b2b')
@@ -54,7 +54,7 @@ class ModernProgressWindow:
         title_frame.pack(pady=20)
 
         tk.Label(title_frame,
-                 text="AutoMonsterX Updater",
+                 text="AutoMonster Updater",
                  font=("Helvetica", 16, "bold"),
                  fg='#ffffff',
                  bg='#2b2b2b').pack()
@@ -438,7 +438,7 @@ def self_update(latest_release, progress_window):
     
     # Check for version file in assets
     version_asset = next((a for a in assets if a['name'] == 'launcher_version.txt'), None)
-    launcher_asset = next((a for a in assets if a['name'] in ['LauncherAutoMonsterX.exe', 'Launcher.bin']), None)
+    launcher_asset = next((a for a in assets if a['name'] in ['LauncherAutoMonster.exe', 'Launcher.bin']), None)
     
     if not launcher_asset:
         return False
@@ -498,25 +498,22 @@ def download_main_exe(progress_window=None):
     response = requests.get(f"{repo_url_api}/releases/latest")
     latest_release = response.json()
     assets = latest_release['assets']
-    # Look for AutoMonsterX.exe or AutoMonsterX.bin
-    main_exe = next((asset for asset in assets if asset['name'] in ['AutoMonsterX.exe', 'AutoMonsterX.bin']), None)
+    # Look for AutoMonster.exe or AutoMonster.bin
+    main_exe = next((asset for asset in assets if asset['name'] in ['AutoMonster.exe', 'AutoMonster.bin']), None)
     if not main_exe:
-        raise Exception("AutoMonsterX.exe not found in release")
+        raise Exception("AutoMonster.exe not found in release")
 
     temp_dir = gettempdir()
-    temp_file = os.path.join(temp_dir, "AutoMonsterX_new.exe")
+    temp_file = os.path.join(temp_dir, "AutoMonster_new.exe")
     
     download_file(main_exe['browser_download_url'], temp_file, progress_window, 50, 100, "Downloading main executable...")
 
-    if getattr(sys, 'frozen', False):
-        current_dir = os.path.dirname(sys.executable)
-    else:
-        current_dir = os.path.dirname(os.path.abspath(__file__))
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     try:
         # Replace file using python instead of batch script
-        if os.path.exists("AutoMonsterX.exe"):
-            os.remove("AutoMonsterX.exe")
-        shutil.move(temp_file, "AutoMonsterX.exe")
+        if os.path.exists("AutoMonster.exe"):
+            os.remove("AutoMonster.exe")
+        shutil.move(temp_file, "AutoMonster.exe")
             
     except Exception as e:
         import tkinter.messagebox as msg
@@ -526,7 +523,7 @@ def download_main_exe(progress_window=None):
 
 def launch_main(updated=False):
     # Use Popen to launch without blocking
-    subprocess.Popen(["AutoMonsterX.exe"] + (["updated"] if updated else []))
+    subprocess.Popen(["AutoMonster.exe"] + (["updated"] if updated else []))
 
 
 def save_version(version):
@@ -548,7 +545,7 @@ def update_process(progress_window, latest_version):
         download_main_exe(progress_window)
         if latest_version:
             save_version(latest_version)
-        progress_window.update_progress(100, "Update completed!", "Starting AutoMonsterX...")
+        progress_window.update_progress(100, "Update completed!", "Starting AutoMonster...")
         time.sleep(1)
         # Set up the launch before closing
         launch_main(True)

@@ -7,7 +7,7 @@ import numpy as np
 import scrcpy
 from adbutils import adb
 
-import AutoMonsterXErrors
+import AutoMonsterErrors
 import Constants
 from Constants import (
     ASSETS, Ancestral_Cavers, AdLocationsHorizontal, AdLocationsVertical,
@@ -309,7 +309,7 @@ class Controller:
                 continue
             cords = self._get_cords(asset, screenshot, threshold=threshold, gray_img=gray_img)
             if index >= len(cords):
-                raise AutoMonsterXErrors.ClickError(f"Index {index} is out of range for asset {asset}")
+                raise AutoMonsterErrors.ClickError(f"Index {index} is out of range for asset {asset}")
             if len(cords) > 0:
                 x, y = cords[index]
                 self.client.control.touch(x, y, scrcpy.ACTION_DOWN)
@@ -318,7 +318,7 @@ class Controller:
                 self.pause(pause)
                 return True
         if raise_error:
-            raise AutoMonsterXErrors.ClickError(f"Could not find any of the assets: {assets}")
+            raise AutoMonsterErrors.ClickError(f"Could not find any of the assets: {assets}")
         return False
 
     def click_back(self, skip_ad_check=False, pause: float = 2):
@@ -354,7 +354,7 @@ class Controller:
                             break
                         self.pause(.5)
                         if count > 5:
-                            raise AutoMonsterXErrors.SliderError("Slider still present after clicking continue")
+                            raise AutoMonsterErrors.SliderError("Slider still present after clicking continue")
                     logger.info("Skipped are you there")
                     return True
                 # Check for new screenshot to see if user moved it
@@ -380,7 +380,7 @@ class Controller:
                         break
                     self.pause(.5)
                     if count > 5:
-                        raise AutoMonsterXErrors.SliderError("Slider still present after clicking continue")
+                        raise AutoMonsterErrors.SliderError("Slider still present after clicking continue")
                 logger.info("Skipped are you there")
                 return True
             count = 0
@@ -391,7 +391,7 @@ class Controller:
                     break
                 count += 1
                 if count > 5:
-                    raise AutoMonsterXErrors.SliderError("Cannot find slider after trying to move it")
+                    raise AutoMonsterErrors.SliderError("Cannot find slider after trying to move it")
         return False
 
     def in_screen(self, *assets: str, screenshot=None, skip_ad_check=False, retries: int = 1, gray_img=False,
@@ -439,7 +439,7 @@ class Controller:
                 return True
             self.pause(.1)
         if raise_error:
-            raise AutoMonsterXErrors.WaitError(f"Could not find any of the assets: {assets} in {timeout} seconds")
+            raise AutoMonsterErrors.WaitError(f"Could not find any of the assets: {assets} in {timeout} seconds")
         return False
 
     def follow_sequence(self, *sequence: Optional[Optional[str | tuple[str, ...]]], max_tries: int = 1,
@@ -470,7 +470,7 @@ class Controller:
 
             if not self.wait_for(*sq, timeout=timeout):
                 if raise_error:
-                    raise AutoMonsterXErrors.FollowSequenceError(f"Failed to find first action: {sequence[0]}")
+                    raise AutoMonsterErrors.FollowSequenceError(f"Failed to find first action: {sequence[0]}")
                 return False
 
             for i in range(len(sequence) - 1):
@@ -481,7 +481,7 @@ class Controller:
             if tries < max_tries - 1:
                 logger.info(f"Failed to follow sequence: {sequence}, trying again")
         if raise_error:
-            raise AutoMonsterXErrors.FollowSequenceError(f"Failed to follow sequence: {sequence}, in part {sequence[i]}")
+            raise AutoMonsterErrors.FollowSequenceError(f"Failed to follow sequence: {sequence}, in part {sequence[i]}")
         return False
 
     def force_close(self):
@@ -493,7 +493,7 @@ class Controller:
         Args:
             action: One of:
                 - "Close Game Only": Just close the game
-                - "Close Game & Exit Program": Close game and exit AutoMonsterX
+                - "Close Game & Exit Program": Close game and exit AutoMonster
                 - "Close Game & Shutdown Computer": Close game, exit, and shutdown PC
         """
         import os
@@ -638,10 +638,10 @@ class Controller:
         try:
             num_battles = int(num_battles)
         except ValueError:
-            raise AutoMonsterXErrors.InputError(f"Invalid number of battles: {num_battles} must be an integer")
+            raise AutoMonsterErrors.InputError(f"Invalid number of battles: {num_battles} must be an integer")
 
         if num_battles < 1:
-            raise AutoMonsterXErrors.InputError("PVP battles must be greater than 0")
+            raise AutoMonsterErrors.InputError("PVP battles must be greater than 0")
 
         if not self.in_screen(ASSETS.EnterBattlePVP, ASSETS.PVPNoPoints):
             self._goto_pvp()
@@ -650,8 +650,8 @@ class Controller:
             if not self.wait_for(ASSETS.EnterBattlePVP, ASSETS.PVPNoPoints, timeout=5):
                 try:
                     self._goto_pvp()
-                except AutoMonsterXErrors.PVPError:
-                    raise AutoMonsterXErrors.PVPError("Failed to enter PVP")
+                except AutoMonsterErrors.PVPError:
+                    raise AutoMonsterErrors.PVPError("Failed to enter PVP")
 
             if handle_boxes:
                 self._start_unlocking_box()
@@ -719,7 +719,7 @@ class Controller:
         if self.follow_sequence(ASSETS.Cavern, ASSETS.RightArrow, timeout=20):
             logger.info("In cavern")
         else:
-            raise AutoMonsterXErrors.GoToError("Failed to enter cavern")
+            raise AutoMonsterErrors.GoToError("Failed to enter cavern")
 
     def do_cavern(self, *dungeons_to_do: str, change_team: bool = False, max_rooms: int = 0, progress_callback=None):
         def handle_error_ending(ancestral: bool) -> bool:
@@ -742,7 +742,7 @@ class Controller:
             return False
 
         if len(dungeons_to_do) == 0:
-            raise AutoMonsterXErrors.InputError("No dungeons to do")
+            raise AutoMonsterErrors.InputError("No dungeons to do")
 
         dungeons_to_do_temp = []
         for dungeon in set(dungeons_to_do):
@@ -856,10 +856,10 @@ class Controller:
                     errors += 1
                     self.click_back()
                     if errors > 3:
-                        raise AutoMonsterXErrors.PlayAdsError("Error playing video")
+                        raise AutoMonsterErrors.PlayAdsError("Error playing video")
                     continue
                 else:
-                    raise AutoMonsterXErrors.PlayAdsError("Failed to play ad")
+                    raise AutoMonsterErrors.PlayAdsError("Failed to play ad")
 
             errors = 0
             played_ads += 1
